@@ -2,22 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
-	// Switch,
-	// Route,
+	Switch,
+	Route,
 	// useLocation,
 } from 'react-router-dom';
-// import loadable from '@loadable/component';
+import { ThemeProvider } from 'styled-components';
+import loadable from '@loadable/component';
 import './index.scss';
+import theme from './theme/theme';
+
+const Homepage = loadable( () => import( /* webpackChunkName: "home" */ './pages/home' ) );
 
 const App = () => (
-	<div>
-		Hey there
-	</div>
+	<ThemeProvider theme={theme}>
+		<Switch>
+			<Route exact path="/" component={Homepage} />
+		</Switch>
+	</ThemeProvider>
 );
 
 ReactDOM.render(
 	<Router>
 		<App />
 	</Router>,
-	document.getElementById('app'),
+	document.getElementById( 'app' ),
 );
