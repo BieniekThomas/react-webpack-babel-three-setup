@@ -88,6 +88,10 @@ const config = {
 					from: path.join( paths.SRC, '_headers' ),
 					to: path.join( paths.DIST ),
 				},
+				{
+					from: path.join( paths.SRC, 'public' ),
+					to: path.join( paths.DIST, 'public' ),
+				},
 			],
 		}),
 	],
