@@ -1,5 +1,5 @@
 import React from 'react';
-import Wrapper from '../util/wrapper/wrapper';
+import Wrapper from '../components/wrapper/wrapper';
 
 const HomePage = () => {
 	console.log( 'Welcome' );

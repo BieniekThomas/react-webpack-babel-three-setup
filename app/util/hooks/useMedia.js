@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function useMedia( queries, values, defaultValue ) {
-	const match = () => values[queries.findIndex( q => matchMedia( q ).matches )] || defaultValue;
+	const match = useCallback(
+		() => values[queries.findIndex( q => matchMedia( q ).matches )] || defaultValue,
+		[queries, defaultValue, values],
+	);
 	const [value, set] = useState( match );
 	useEffect( () => {
 		const handler = () => set( match );
 		window.addEventListener( 'resize', handler );
 		return () => window.removeEventListener( 'resize', handler );
-	}, []);
+	}, [match]);
 	return value;
 }

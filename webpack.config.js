@@ -1,11 +1,11 @@
 const path = require( 'path' );
 
 const webpack = require( 'webpack' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const { BundleAnalyzerPlugin } = require( 'webpack-bundle-analyzer' );
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
-const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
 const ImageminPlugin = require( 'imagemin-webpack-plugin' ).default;
 const ImageminMozjpeg = require( 'imagemin-mozjpeg' );
 
@@ -62,6 +62,7 @@ const config = {
 		compress: true,
 		historyApiFallback: true,
 	},
+	devtool: 'eval-cheap-module-source-map',
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
@@ -99,12 +100,10 @@ const config = {
 
 if ( isProd ) {
 	config.plugins = config.plugins.concat([
-		new UglifyJsPlugin({
-			uglifyOptions: {
-				compress: {
-					drop_debugger: true,
-					drop_console: true,
-				},
+		new TerserPlugin({
+			parallel: true,
+			terserOptions: {
+				ecma: 6,
 			},
 		}),
 		new ImageminPlugin({
